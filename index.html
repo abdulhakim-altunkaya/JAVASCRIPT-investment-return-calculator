@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style media="screen">
+    @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background: dodgerblue linear-gradient(45deg, aqua, dodgerblue, deeppink) fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+    }
+
+    .mainArea {
+      margin: 0;
+      padding: 0;
+      width: 80vw;
+      min-height: 100vh;
+      background-color: #282c34;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing: antialiased;
+      border-width: 3px;
+      border-style: solid;
+      border-image: 
+        linear-gradient(
+          to bottom, 
+          red, 
+          yellow,
+          rgba(0, 0, 0, 0)
+        ) 1 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .wrapperH1 {
+     width: 100%;
+     text-align: center;
+    }
+    .mainArea h1{
+      font-family: "Lobster";
+      padding-top: 30px;
+      padding-bottom: 30px;
+      text-shadow:
+      -1px -1px 0 #ffffff,
+      1px -1px 0 #ffffff,
+      -1px 1px 0 #ffffff,
+      1px 1px 0 #ffffff;
+    }
+    .mainArea label{
+      font-family: "Cairo";
+      color: white;
+      padding-left: 5px;
+      margin-bottom: 5px;
+      font-size: 20px;
+    }
+    .mainArea input {
+      border-radius: 5px;
+      height: 40px;
+      margin-bottom: 5px;
+      border: 2px solid darkslategray;
+      font-size: 20px;
+      outline: none;
+      padding-left: 7px;
+      
+    }
+    .contentArea {
+      width: 50%;
+      flex-grow: 1;
+    }
+
+    .buttonClass {
+      border-radius: 100rem;
+      margin-right: 10px;
+      margin-top: 10px;
+      font-size: 20px;
+      padding: .3rem 3rem;
+      color: black;
+      border: solid 3px transparent;
+      background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg, #78e4ff, #ff48fa);
+      background-origin: border-box;
+      background-clip: content-box, border-box;
+      box-shadow: 2px 1000px 1px #fff inset;
+      font-family: "Anton";
+      letter-spacing: 2px;
+    }
+
+    .buttonClass:hover {
+      box-shadow: none;
+      color: white;
+      text-shadow:
+      -1px -1px 0 black,
+      1px -1px 0 black,
+      -1px 1px 0 black,
+      1px 1px 0 black;
+    }
+    .note{
+      font-family: "Cairo";
+      background-color: lightgoldenrodyellow;
+      color: black;
+      border-radius: 5px;
+      margin-top: 10px;
+      padding-left: 7px;
+    }
+
+    .aboutDiv{
+      flex-grow: 0;
+    }
+
+    /*REMOVING UP DOWN ARROWS FROM INPUT FIELD*/
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .mainArea {
+        width: 90vw;
+      }
+      .buttonClass {
+        display: block;
+        width: 60%;
+        padding: 5px;
+      }
+      .mainArea label{
+        display: block;
+      }
+      .contentArea {
+        width: 95%;
+      }
+    }
+
+    </style>
+    <title>INVESTMENT RETURN</title>
+  </head>
+  <body>
+    <div class="mainArea">
+      <div class="contentArea">
+          <div class="wrapperH1">
+            <h1>INVESTMENT RETURN CALCULATOR</h1>
+          </div>
+          <input type="number"
+              id="investmentAmount"
+              required>
+          <label for="investmentAmount">Enter Investment Amount</label><br>
+
+          <input type="number" 
+              id="percentage"
+              required>
+          <label for="percentage">Enter return percentage amount</label><br>
+
+          <input type="number" 
+              id="duration"
+              required>
+          <label for="duration">Enter duration (months or years)</label><br>
+
+          <button class="buttonClass" onclick="calculate()">CALCULATE</button>
+          <button  class="buttonClass" onclick="clearFields()">CLEAR</button>
+          <p class="note">For example, if you have 1000 euros, and if you plan 10% percent profit per month for 12 months, then you need enter 1000 in the first input, 10 in the second input and 12 in the third input.
+          </p>
+          <p id="resultArea" class="note"></p>
+          
+      </div>
+      <div class="aboutDiv">Author: Abdulhakim Altunkaya, Copyright &#169; January 2022, e-mail: altunkaya2@gmail.com</div>
+    </div>
+    <script>
+
+      const calculate = () => {
+        document.getElementById("resultArea").innerHTML = "";
+        let amount = document.getElementById("investmentAmount").value;
+        let percentage = document.getElementById("percentage").value;
+        let duration = document.getElementById("duration").value;
+        for (let index = 1; index <= duration; index++) {
+          let newPercentage = percentage/100;
+          let profit = amount*newPercentage;
+          amount = Number(amount)+Number(profit);
+          amount = Math.round(amount * 100) / 100;
+          let text = `${amount} in ${index} years/months <br>`;
+          document.getElementById("resultArea").innerHTML += text;
+        }
+      }
+
+      document.addEventListener("keydown", (event) => {
+        if (event.keyCode === 13) {
+          calculate();
+        }
+      });
+
+      const clearFields = () => {
+        document.getElementById("investmentAmount").value ="";
+        document.getElementById("percentage").value = "";
+        document.getElementById("duration").value = "";
+        document.getElementById("resultArea").innerHTML = "";
+        document.getElementById("investmentAmount").focus();
+      }
+
+
+
+    </script>
+  </body>
+</html>
